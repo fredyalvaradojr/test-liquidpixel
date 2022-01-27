@@ -1,0 +1,7 @@
+{
+  "extends": "@harmony/eslint-config-homedepot/experience",
+  "rules": {
+    "operator-linebreak": "off",
+    "indent": ["warn"]
+  }
+}

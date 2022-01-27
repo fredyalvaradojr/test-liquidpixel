@@ -1,0 +1,11 @@
+.visualizerContainer {
+    padding: 1.25rem 1rem;
+}
+
+.surroundContainer {
+	width: 100%;
+	height: 40.3125rem;
+	position: relative;
+	overflow: hidden;
+}
+
