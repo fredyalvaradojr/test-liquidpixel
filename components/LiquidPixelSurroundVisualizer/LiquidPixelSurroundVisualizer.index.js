@@ -33,7 +33,7 @@ const LiquidPixelSurroundVisualizer = ({ activeColor, activeLogo, chain }) => {
           uri: 'homedepot',
           model: 'https://assets.codepen.io/t-2371/homedepot-helmet-9362.glb',
           textureMap: {
-            Helmet_9362: `set=color[%23${activeColor}]&set=logo[${activeLogo}]&call=url[${chain}],nocache[true]&sink=format[png]`
+            Helmet_9362: `set=color[%23${activeColor}]&set=logo[${activeLogo}]&call=url[${chain}],&sink=format[png]`
           },
           lighting: [
             {
@@ -63,7 +63,7 @@ const LiquidPixelSurroundVisualizer = ({ activeColor, activeLogo, chain }) => {
         });
       } else {
         viewer.updateTextureMap({
-          Helmet_9362: `set=color[%23${activeColor}]&set=logo[${activeLogo}]&call=url[${chain}],nocache[true]&sink=format[png]`
+          Helmet_9362: `set=color[%23${activeColor}]&set=logo[${activeLogo}]&call=url[${chain}],&sink=format[png]`
         });
       }
     });
