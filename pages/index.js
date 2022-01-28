@@ -7,11 +7,30 @@ import styles from '../styles/Home.module.css';
 
 export default function Home() {
   const chain = `https://assets.codepen.io/t-2371/homedepot-helmet-9362.chain`;
+  const logoList = [
+    {
+      name: 'LiquidPixel',
+      src: 'https://www.liquidpixels.com/assets/static/liquidpixels-logo-color-black.jpg'
+    },
+    {
+      name: 'The Home Depot',
+      src: 'https://assets.codepen.io/t-2371/homedepot-logo.jpg'
+    },
+    {
+      name: 'Bechtel',
+      src: 'https://res.cloudinary.com/dc6unffgo/image/upload/v1643384581/lptest/bechtel-logo-2_eis7u9.png'
+    },
+    {
+      name: 'Pro Construction',
+      src: 'https://res.cloudinary.com/dc6unffgo/image/upload/v1643384582/lptest/519-5191205_logo-pro-construction-professional-construction-construction-company-logo_wm5xtl.png'
+    },
+    {
+      name: 'Turner',
+      src: 'https://res.cloudinary.com/dc6unffgo/image/upload/v1643384581/lptest/images_xkszg5.png'
+    }
+  ];
   const [activeColor, setActiveColor] = useState('ffffff');
-  const [activeLogo, setActiveLogo] = useState(
-    'https://www.liquidpixels.com/assets/static/liquidpixels-logo-color-black.jpg'
-  );
-
+  const [activeLogo, setActiveLogo] = useState(logoList[0].src);
   const updateColor = (e) => {
     const updateToColor = e.currentTarget.getAttribute('data-color');
     if (activeColor != updateToColor) {
@@ -89,40 +108,24 @@ export default function Home() {
           <section className={styles.configuratorTileContainer}>
             <h3 className={styles.tileHeader}>Logo:</h3>
             <div className={styles.tileGroup}>
-              <button
-                className={cl(styles.tile, {
-                  [styles.tileSelected]:
-                    activeLogo ===
-                    'https://www.liquidpixels.com/assets/static/liquidpixels-logo-color-black.jpg'
-                })}
-                onClick={updateLogo}
-                data-logo="https://www.liquidpixels.com/assets/static/liquidpixels-logo-color-black.jpg"
-              >
-                <span className={styles.logoBox}>
-                  <img
-                    className={styles.logoImage}
-                    alt="liquidpixel logo"
-                    src="https://www.liquidpixels.com/assets/static/liquidpixels-logo-color-black.jpg"
-                  />
-                </span>
-              </button>
-              <button
-                className={cl(styles.tile, {
-                  [styles.tileSelected]:
-                    activeLogo ===
-                    'https://assets.codepen.io/t-2371/homedepot-logo.jpg'
-                })}
-                onClick={updateLogo}
-                data-logo="https://assets.codepen.io/t-2371/homedepot-logo.jpg"
-              >
-                <span className={styles.logoBox}>
-                  <img
-                    className={styles.logoImage}
-                    alt="liquidpixel logo"
-                    src="https://assets.codepen.io/t-2371/homedepot-logo.jpg"
-                  />
-                </span>
-              </button>
+              {logoList.map((logo) => (
+                <button
+                  key={logo.name}
+                  className={cl(styles.tile, {
+                    [styles.tileSelected]: activeLogo === logo.src
+                  })}
+                  onClick={updateLogo}
+                  data-logo={logo.src}
+                >
+                  <span className={styles.logoBox}>
+                    <img
+                      className={styles.logoImage}
+                      alt={logo.name}
+                      src={logo.src}
+                    />
+                  </span>
+                </button>
+              ))}
             </div>
           </section>
         </div>
