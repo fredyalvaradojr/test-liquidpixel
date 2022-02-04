@@ -103,3 +103,8 @@
   width: 100%;
   height: auto;
 }
+
+.tileText {
+  padding: 8px 10px;
+  font-size: 1rem;
+}

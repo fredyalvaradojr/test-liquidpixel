@@ -6,7 +6,21 @@ import LiquidPixelSurroundVisualizer from '../components/LiquidPixelSurroundVisu
 import styles from '../styles/Home.module.css';
 
 export default function Home() {
-  const chain = `https://assets.codepen.io/t-2371/homedepot-helmet-9362.chain`;
+  // load from product setup?
+  const modelOptions = {
+    Helmet_9362: {
+      textureMapName: 'Helmet_9362',
+      optionName: 'Cap Style',
+      model: 'https://assets.codepen.io/t-2371/homedepot-helmet-9362.glb',
+      chain: 'https://assets.codepen.io/t-2371/homedepot-helmet-9362.chain'
+    },
+    Helmet: {
+      textureMapName: 'Helmet',
+      optionName: 'Full Brim',
+      model: 'https://assets.codepen.io/t-2371/homedepot-helmet-9367.glb',
+      chain: 'https://assets.codepen.io/t-2371/homedepot-helmet-9367.chain'
+    }
+  };
   const logoList = [
     {
       name: 'LiquidPixel',
@@ -29,8 +43,13 @@ export default function Home() {
       src: 'https://res.cloudinary.com/dc6unffgo/image/upload/v1643384581/lptest/images_xkszg5.png'
     }
   ];
+  const modelOptionKeys = Object.keys(modelOptions);
   const [activeColor, setActiveColor] = useState('ffffff');
   const [activeLogo, setActiveLogo] = useState(logoList[0].src);
+  const [activeTexture, setActiveTexture] = useState({
+    prev: null,
+    current: modelOptions[modelOptionKeys?.[0]]
+  });
   const updateColor = (e) => {
     const updateToColor = e.currentTarget.getAttribute('data-color');
     if (activeColor != updateToColor) {
@@ -42,6 +61,17 @@ export default function Home() {
     const updateToLogo = e.currentTarget.getAttribute('data-logo');
     if (activeLogo != updateToLogo) {
       setActiveLogo(updateToLogo);
+    }
+  };
+
+  const updateTexture = (e) => {
+    const updateToTexture = e.currentTarget.getAttribute('data-texture');
+
+    if (activeTexture?.current?.textureMapName != updateToTexture) {
+      setActiveTexture({
+        ...activeTexture,
+        current: modelOptions?.[updateToTexture]
+      });
     }
   };
 
@@ -58,10 +88,35 @@ export default function Home() {
           <LiquidPixelSurroundVisualizer
             activeColor={activeColor}
             activeLogo={activeLogo}
-            chain={chain}
+            activeTexture={activeTexture}
+            setActiveTexture={setActiveTexture}
           />
         </div>
         <div className={styles.configuratorSection}>
+          <section className={styles.configuratorTileContainer}>
+            <h3 className={styles.tileHeader}>Brim Style:</h3>
+            <div className={styles.tileGroup}>
+              {modelOptionKeys.map((optionKey) => {
+                const option = modelOptions[optionKey];
+                return (
+                  <button
+                    key={option?.textureMapName}
+                    className={cl(styles.tile, {
+                      [styles.tileSelected]:
+                        activeTexture?.current?.textureMapName ===
+                        option?.textureMapName
+                    })}
+                    onClick={updateTexture}
+                    data-texture={option?.textureMapName}
+                  >
+                    <span className={cl(styles.tileText)}>
+                      {option?.optionName}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </section>
           <section className={styles.configuratorTileContainer}>
             <h3 className={styles.tileHeader}>Color:</h3>
             <div className={styles.tileGroup}>

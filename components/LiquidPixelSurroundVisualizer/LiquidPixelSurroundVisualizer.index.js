@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from 'react';
 import cl from 'classnames';
 // getScript will be used from @gcc/autobahn-utilities in gcc-autobahn-frontend
 import { getScript } from '../../util/getScript';
@@ -23,17 +24,45 @@ const loadSurround = (callback) => {
   }
 };
 
-const LiquidPixelSurroundVisualizer = ({ activeColor, activeLogo, chain }) => {
+const LiquidPixelSurroundVisualizer = ({
+  activeColor,
+  activeLogo,
+  activeTexture
+}) => {
+  const [prevTextureName, setPrevTextureName] = useState(null);
+
   useEffect(() => {
     loadSurround(() => {
-      if (!viewer) {
+      if (
+        viewer &&
+        activeTexture?.current?.textureMapName === prevTextureName
+      ) {
+        viewer.updateTextureMap({
+          [activeTexture?.current
+            ?.textureMapName]: `set=color[%23${activeColor}]&set=logo[${activeLogo}]&call=url[${activeTexture?.current?.chain}],&sink=format[png]`
+        });
+      }
+
+      if (viewer && activeTexture?.current?.textureMapName != prevTextureName) {
+        console.log('viewer reset: ', activeTexture);
+        viewer.reset({
+          model: activeTexture?.current?.model,
+          textureMap: {
+            [activeTexture?.current
+              ?.textureMapName]: `set=color[%23${activeColor}]&set=logo[${activeLogo}]&call=url[${activeTexture?.current?.chain}]&sink=format[webp]`
+          }
+        });
+      }
+
+      if (!prevTextureName && !viewer) {
         const { com } = window;
         viewer = new com.liquidpixels.Surround(`.${lpClassName}`, {
           server: 'homedepot.liquifire.com',
           uri: 'homedepot',
-          model: 'https://assets.codepen.io/t-2371/homedepot-helmet-9362.glb',
+          model: activeTexture?.current?.model,
           textureMap: {
-            Helmet_9362: `set=color[%23${activeColor}]&set=logo[${activeLogo}]&call=url[${chain}],&sink=format[png]`
+            [activeTexture?.current
+              ?.textureMapName]: `set=color[%23${activeColor}]&set=logo[${activeLogo}]&call=url[${activeTexture?.current?.chain}],&sink=format[png]`
           },
           lighting: [
             {
@@ -61,13 +90,11 @@ const LiquidPixelSurroundVisualizer = ({ activeColor, activeLogo, chain }) => {
             }
           }
         });
-      } else {
-        viewer.updateTextureMap({
-          Helmet_9362: `set=color[%23${activeColor}]&set=logo[${activeLogo}]&call=url[${chain}],&sink=format[png]`
-        });
       }
+
+      setPrevTextureName(activeTexture?.current?.textureMapName);
     });
-  }, [activeColor, activeLogo, chain]);
+  }, [activeColor, activeLogo, activeTexture]);
 
   return (
     <>
