@@ -28,19 +28,19 @@ export default function Home() {
     },
     {
       name: 'The Home Depot',
-      src: 'https://assets.codepen.io/t-2371/homedepot-logo.jpg'
+      src: 'https://gcc-ppe-images.s3.amazonaws.com/purchased/configid_132lpdemo/location_front--name_the-home-depot.svg'
     },
     {
-      name: 'Bechtel',
-      src: 'https://res.cloudinary.com/dc6unffgo/image/upload/v1643384581/lptest/bechtel-logo-2_eis7u9.png'
+      name: 'CAT',
+      src: 'https://gcc-ppe-images.s3.amazonaws.com/purchased/configid_132lpdemo/location_front--name_cat.svg'
     },
     {
-      name: 'Pro Construction',
-      src: 'https://res.cloudinary.com/dc6unffgo/image/upload/v1643384582/lptest/519-5191205_logo-pro-construction-professional-construction-construction-company-logo_wm5xtl.png'
+      name: 'NBC',
+      src: 'https://gcc-ppe-images.s3.amazonaws.com/purchased/configid_132lpdemo/location_side--name_nbc.svg'
     },
     {
       name: 'Turner',
-      src: 'https://res.cloudinary.com/dc6unffgo/image/upload/v1643384581/lptest/images_xkszg5.png'
+      src: 'https://gcc-ppe-images.s3.amazonaws.com/purchased/configid_132lpdemo/location_back--name_turner-logo.png'
     }
   ];
   const modelOptionKeys = Object.keys(modelOptions);
